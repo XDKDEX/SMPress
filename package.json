@@ -1,0 +1,12 @@
+{
+  "name": "smpress",
+  "version": "1.0.0",
+  "description": "* [ ] 支持流式传输 * [ ] 支持异步 * [ ] 基本(?)的express功能 * [ ] 重写get函数的res和req的功能",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "types": "./index.d.ts"
+}
