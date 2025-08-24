@@ -1,14 +1,24 @@
 const http = require('http');
 const url = require('url');
 
-const pathMapping = {}
 
 function smpress(params) {
+    const pathMapping = {}
     class smpress {
         constructor() {
             this.port = 80;
+            this.routes = {
+                GET: {},
+                POST: {},
+                PUT: {},
+                DELETE: {},
+                ALL: {}
+            };
         }
         bind(port) {
+            if (typeof port !== 'number' || port < 1 || port > 65565) {
+                throw new Error('Port must be a number between 1 and 65565');
+            }
             this.port = port;
         }
         create() {
@@ -17,7 +27,7 @@ function smpress(params) {
                 if (pathname in pathMapping) {
                     let req = {};
                     let res = {};
-                    req.query = function () {return query(request.url)}
+                    req.query = function () { return query(pathname, request.url) }
                     pathMapping[pathname](req, res);
                     response.end()
                 } else {
@@ -33,7 +43,8 @@ function smpress(params) {
     }
     return new smpress();
 }
-function query(string) {
+function query(rootPath, string) {
+    string = string.substr(rootPath.indexOf('/') + 2)
     let result = {};
     if (string.indexOf("=") == -1 && string.indexOf("&") == -1) { return null }
     if (string.indexOf("&") == -1) {
